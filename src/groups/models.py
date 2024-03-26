@@ -7,8 +7,7 @@ from sqlalchemy.orm import relationship, mapped_column, Mapped
 class Group(Base):
     __tablename__ = 'group'
 
-    id: Mapped[int] = mapped_column(primary_key=True, unique=True, index=True, autoincrement=True)
-    lead_id: Mapped[int] = mapped_column(ForeignKey('person.id', use_alter=True), nullable=False)
+    lead_id: Mapped[int] = mapped_column(nullable=False)
 
     person: Mapped[List['Person']] = relationship(back_populates='group')
     report: Mapped[List['Report']] = relationship(back_populates='group', cascade='save-update, merge, delete')
