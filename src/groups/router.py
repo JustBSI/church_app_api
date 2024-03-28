@@ -14,13 +14,8 @@ router = APIRouter(
 @router.get("/{group_id}")
 async def get_group_by_id(group_id: int, session: AsyncSession = Depends(get_async_session)):
     query = select(Group).where(Group.id == group_id)
-    await session.execute(query)
-
-
-@router.get("/{lead_id}")
-async def get_group_by_lead_id(lead_id: int, session: AsyncSession = Depends(get_async_session)):
-    query = select(Group).where(Group.lead_id == lead_id)
-    await session.execute(query)
+    result = await session.execute(query)
+    return result.mappings().all()
 
 
 @router.post("/")

@@ -10,7 +10,7 @@ class Person(Base):
     first_name: Mapped[str] = mapped_column(nullable=False)
     last_name: Mapped[str] = mapped_column(nullable=False)
     phone_num: Mapped[str] = mapped_column(nullable=False, unique=True)
-    group_id: Mapped[int | None] = mapped_column(ForeignKey('group.id'))
+    group_id: Mapped[int | None] = mapped_column(ForeignKey('group.id'), default=None, server_default=None)
 
     group: Mapped['Group'] = relationship(back_populates='person')
     record: Mapped[List['Record']] = relationship(back_populates='person', cascade='save-update, merge, delete')

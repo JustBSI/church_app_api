@@ -6,4 +6,4 @@ class PersonCreate(BaseModel):
     first_name: str
     last_name: str
     phone_num: str
-    group_id: int | None = None
+    group_id: int | None
