@@ -20,7 +20,7 @@ async def get_report_by_id(report_id: int, session: AsyncSession = Depends(get_a
 
 @router.post("/")
 async def add_new_report(new_report: ReportCreate, session: AsyncSession = Depends(get_async_session)):
-    stmt = insert(Report).values(new_report.dict())
+    stmt = insert(Report).values(**new_report.dict())
     await session.execute(stmt)
     await session.commit()
     return {'status': 'success', 'data': new_report.dict()}
@@ -35,8 +35,8 @@ async def delete_report_by_id(report_id: int, session: AsyncSession = Depends(ge
 
 
 @router.patch("/")
-async def update_group_by_id(info: ReportCreate, report_id: int, session: AsyncSession = Depends(get_async_session)):
-    stmt = update(Report).values(info.dict()).where(Report.id == report_id)
+async def update_report_by_id(info: ReportCreate, report_id: int, session: AsyncSession = Depends(get_async_session)):
+    stmt = update(Report).values(**info.dict()).where(Report.id == report_id)
     await session.execute(stmt)
     await session.commit()
     return {'updated report': info}

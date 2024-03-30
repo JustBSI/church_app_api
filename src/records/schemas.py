@@ -5,7 +5,7 @@ class RecordCreate(BaseModel):
     id: int
     report_id: int
     person_id: int
-    sunday_service: int
+    sunday_service: bool
     morning_pray: bool
     thursday_pray: bool
     abstinence: bool
@@ -14,4 +14,4 @@ class RecordCreate(BaseModel):
     meet: bool
     home_service: bool
     mentoring: bool
-    reason_for_absence: str
+    reason_for_absence: str | None

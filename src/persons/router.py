@@ -20,7 +20,7 @@ async def get_person_by_id(person_id: int, session: AsyncSession = Depends(get_a
 
 @router.post("/")
 async def add_new_person(new_person: PersonCreate, session: AsyncSession = Depends(get_async_session)):
-    stmt = insert(Person).values(new_person.dict())
+    stmt = insert(Person).values(**new_person.dict())
     await session.execute(stmt)
     await session.commit()
     return {'status': 'success', 'data': new_person.dict()}
@@ -36,7 +36,7 @@ async def delete_person_by_id(person_id: int, session: AsyncSession = Depends(ge
 
 @router.patch("/")
 async def update_person_by_id(info: PersonCreate, person_id: int, session: AsyncSession = Depends(get_async_session)):
-    stmt = update(Person).values(info.dict()).where(Person.id == person_id)
+    stmt = update(Person).values(**info.dict()).where(Person.id == person_id)
     await session.execute(stmt)
     await session.commit()
     return {'updated person': info}

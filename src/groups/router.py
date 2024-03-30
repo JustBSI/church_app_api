@@ -20,7 +20,7 @@ async def get_group_by_id(group_id: int, session: AsyncSession = Depends(get_asy
 
 @router.post("/")
 async def add_new_group(new_group: GroupCreate, session: AsyncSession = Depends(get_async_session)):
-    stmt = insert(Group).values(new_group.dict())
+    stmt = insert(Group).values(**new_group.dict())
     await session.execute(stmt)
     await session.commit()
     return {'status': 'success', 'data': new_group.dict()}
@@ -36,7 +36,7 @@ async def delete_group_by_id(group_id: int, session: AsyncSession = Depends(get_
 
 @router.patch("/")
 async def update_group_by_id(info: GroupCreate, group_id: int, session: AsyncSession = Depends(get_async_session)):
-    stmt = update(Group).values(info.dict()).where(Group.id == group_id)
+    stmt = update(Group).values(**info.dict()).where(Group.id == group_id)
     await session.execute(stmt)
     await session.commit()
     return {'updated group': info}

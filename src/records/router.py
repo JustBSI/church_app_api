@@ -20,7 +20,7 @@ async def get_record_by_id(record_id: int, session: AsyncSession = Depends(get_a
 
 @router.post("/")
 async def add_new_record(new_record: RecordCreate, session: AsyncSession = Depends(get_async_session)):
-    stmt = insert(Record).values(new_record.dict())
+    stmt = insert(Record).values(**new_record.dict())
     await session.execute(stmt)
     await session.commit()
     return {'status': 'success', 'data': new_record.dict()}
@@ -36,7 +36,7 @@ async def delete_record_by_id(record_id: int, session: AsyncSession = Depends(ge
 
 @router.patch("/")
 async def update_record_by_id(info: RecordCreate, record_id: int, session: AsyncSession = Depends(get_async_session)):
-    stmt = update(Record).values(info.dict()).where(Record.id == record_id)
+    stmt = update(Record).values(**info.dict()).where(Record.id == record_id)
     await session.execute(stmt)
     await session.commit()
     return {'updated record': info}

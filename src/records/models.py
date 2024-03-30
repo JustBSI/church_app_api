@@ -6,8 +6,8 @@ from sqlalchemy.orm import relationship, mapped_column, Mapped
 class Record(Base):
     __tablename__ = 'record'
 
-    report_id: Mapped[int] = mapped_column(ForeignKey('report.id'), nullable=False)
-    person_id: Mapped[int] = mapped_column(ForeignKey('person.id'), nullable=False)
+    report_id: Mapped[int] = mapped_column(ForeignKey('report.id', ondelete='CASCADE'), nullable=False)
+    person_id: Mapped[int] = mapped_column(ForeignKey('person.id', ondelete='CASCADE'), nullable=False)
     sunday_service: Mapped[bool] = mapped_column(nullable=False)
     morning_pray: Mapped[bool] = mapped_column(nullable=False)
     thursday_pray: Mapped[bool] = mapped_column(nullable=False)
@@ -17,7 +17,7 @@ class Record(Base):
     meet: Mapped[bool] = mapped_column(nullable=False)
     home_service: Mapped[bool] = mapped_column(nullable=False)
     mentoring: Mapped[bool] = mapped_column(nullable=False)
-    reason_for_absence: Mapped[str] = mapped_column(nullable=True)
+    reason_for_absence: Mapped[str | None]
 
     report: Mapped['Report'] = relationship(back_populates='record')
     person: Mapped['Person'] = relationship(back_populates='record')
