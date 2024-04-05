@@ -23,7 +23,7 @@ async def add_new_report(new_report: ReportCreate, session: AsyncSession = Depen
     stmt = insert(Report).values(**new_report.dict())
     await session.execute(stmt)
     await session.commit()
-    return {'status': 'success', 'data': new_report.dict()}
+    return {'report was added': new_report.dict()}
 
 
 @router.delete("/")

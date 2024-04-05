@@ -23,7 +23,7 @@ async def add_new_person(new_person: PersonCreate, session: AsyncSession = Depen
     stmt = insert(Person).values(**new_person.dict())
     await session.execute(stmt)
     await session.commit()
-    return {'status': 'success', 'data': new_person.dict()}
+    return {'person was added': new_person.dict()}
 
 
 @router.delete("/")

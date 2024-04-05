@@ -1,14 +1,24 @@
+import time
+
 from fastapi import APIRouter, Depends
 from sqlalchemy import select, insert, delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.database import get_async_session
 from src.groups.models import Group
 from src.groups.schemas import GroupCreate
+from fastapi_cache.decorator import cache
 
 router = APIRouter(
     prefix="/group",
     tags=["group"]
 )
+
+
+@router.get('/long_operation')
+@cache(expire=30)
+def get_long_operation():
+    time.sleep(2)
+    return 'werwerewrwr'
 
 
 @router.get("/{group_id}")
@@ -23,7 +33,7 @@ async def add_new_group(new_group: GroupCreate, session: AsyncSession = Depends(
     stmt = insert(Group).values(**new_group.dict())
     await session.execute(stmt)
     await session.commit()
-    return {'status': 'success', 'data': new_group.dict()}
+    return {'group was deleted': new_group.dict()}
 
 
 @router.delete("/")

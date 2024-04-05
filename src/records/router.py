@@ -23,7 +23,7 @@ async def add_new_record(new_record: RecordCreate, session: AsyncSession = Depen
     stmt = insert(Record).values(**new_record.dict())
     await session.execute(stmt)
     await session.commit()
-    return {'status': 'success', 'data': new_record.dict()}
+    return {'record was added': new_record.dict()}
 
 
 @router.delete("/")
